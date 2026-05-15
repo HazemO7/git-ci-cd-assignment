@@ -11,12 +11,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout repository code
         uses: actions/checkout@v4
 
+      # تم تحديث الأمر هنا لـ docker compose
       - name: Start Docker Compose stack
-        run: docker-compose up -d
+        run: docker compose up -d
 
       - name: Wait for services to fully initialize
         run: sleep 15
@@ -24,11 +24,12 @@ jobs:
       - name: Run network test
         run: curl -f http://localhost:8080 || exit 1
 
-
+      # تم تحديث الأمر هنا أيضاً
       - name: Show Docker logs on failure
         if: failure()
-        run: docker-compose logs
+        run: docker compose logs
 
+      # تم تحديث الأمر هنا أيضاً
       - name: Tear down Docker Compose stack
         if: always()
-        run: docker-compose down
+        run: docker compose down
